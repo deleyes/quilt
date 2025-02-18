@@ -1,2 +1,9 @@
 data/
-/venv/
+venv/
+
+.codegpt
+
+.DS_Store
+.idea/
+
+.DS_Store

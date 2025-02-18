@@ -1,0 +1,4 @@
+pipelines:
+  - name: 'nf_core_ampliseq_test'
+    workspace: 'CP_RD/workspaces'
+
