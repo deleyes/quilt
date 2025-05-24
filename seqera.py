@@ -54,7 +54,7 @@ payload = {
         "configText": """
             aws {client {storageEncryption = 'AES256'}}
             """,
-        "paramsText": "{\"outdir\": \"s3://epa-dev-seqera-bucket/outdir/ampliseq_test/20250220_module/\", \"raise_filter_stacksize\": false}",
+        "paramsText": "{\"outdir\": \"s3://epa-dev-seqera-bucket/outdir/ampliseq_test/20250222_module_2/\", \"raise_filter_stacksize\": false}",
         "preRunScript": """#!/bin/bash 
             echo "Start"
             keytool -printcert -rfc -sslserver seqera-poc.epa.cloud.syngenta.org:443  >  /PRIVATE_CERT.pem
