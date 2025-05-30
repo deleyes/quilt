@@ -63,13 +63,13 @@ def publish_to_quilt(package_name, registry):
     This script needs to be run in the same directory as the raw data files.
     Path to CA certificate needs to be set in the environment variable REQUESTS_CA_BUNDLE.
     """
-    # Create the virtual environment
-    env_name = "venv"
-    create_venv(env_name)
-    activate_venv(env_name)
+    # # Create the virtual environment
+    # env_name = "venv"
+    # create_venv(env_name)
+    # activate_venv(env_name)
 
-    # Install necessary packages in the virtual environment
-    install_packages(env_name, ["pandas", "quilt3", "click", "openpyxl"])
+    # # Install necessary packages in the virtual environment
+    # install_packages(env_name, ["pandas", "quilt3", "click", "openpyxl"])
     
     # Automatically determine the data folder and find the metadata file
     data_folder = os.getcwd()
@@ -113,15 +113,18 @@ def publish_to_quilt(package_name, registry):
     pkg = quilt3.Package()
 
     # Add all files to the package
+    
+    pkg.set_dir(".", ".", meta=metadata_dict)
+    create_quiltignore()
     pkg.set_dir(".", ".", meta=metadata_dict)
     click.echo("Added all files to package")
 
     # Set the custom CA bundle and push the package to Quilt
     os.environ['REQUESTS_CA_BUNDLE'] = "/Users/sdeleye/Library/CloudStorage/GoogleDrive-steven.deleye@lizard.bio/My Drive/Syngenta/cacert.pem"
     try:
-        pkg.push(package_name, registry=registry, force=True, workflow='mgx_raw')
+        pkg.push(package_name, registry=registry, force=True)
         click.echo("Upload complete. Verifying integrity...")
-        pkg.verify()
+        pkg.verify(".", extra_files_ok=True)
         click.echo("Integrity verified.")
     except Exception as e:
         click.echo(f"Error publishing package: {e}", err=True)
@@ -134,4 +137,4 @@ def publish_to_quilt(package_name, registry):
     
 
 if __name__ == "__main__":
-    publish_to_quilt(None, None)
+    publish_to_quilt()
