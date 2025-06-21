@@ -63,13 +63,16 @@ def publish_to_quilt(package_name, registry):
     This script needs to be run in the same directory as the raw data files.
     Path to CA certificate needs to be set in the environment variable REQUESTS_CA_BUNDLE.
     """
-    # # Create the virtual environment
-    # env_name = "venv"
-    # create_venv(env_name)
-    # activate_venv(env_name)
+    # Create a .quiltignore file to exclude unwanted files and directories
+    create_quiltignore()
+    
+    # Create the virtual environment
+    env_name = "venv"
+    create_venv(env_name)
+    activate_venv(env_name)
 
-    # # Install necessary packages in the virtual environment
-    # install_packages(env_name, ["pandas", "quilt3", "click", "openpyxl"])
+    # Install necessary packages in the virtual environment
+    install_packages(env_name, ["pandas", "quilt3", "click", "openpyxl"])
     
     # Automatically determine the data folder and find the metadata file
     data_folder = os.getcwd()
@@ -113,9 +116,6 @@ def publish_to_quilt(package_name, registry):
     pkg = quilt3.Package()
 
     # Add all files to the package
-    
-    pkg.set_dir(".", ".", meta=metadata_dict)
-    create_quiltignore()
     pkg.set_dir(".", ".", meta=metadata_dict)
     click.echo("Added all files to package")
 
